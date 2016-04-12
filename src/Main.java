@@ -2,14 +2,37 @@ import java.util.Scanner;
 
 public class Main {
 	
-	static final short MAX = 100;
 	
 	public static void main(String[] args){
 		
+		TKubas kubas[] = null;
+		short MAX = 20;
+		
+		if(args.length==0){
+			kubas = new TKubas[20];
+		}
+		if(args.length!=0 && args.length!=2){
+			System.out.println("Usage: -maxCubes <amount>");
+			System.exit(0);
+		}
+		if(args.length==2 && args[0]!="-maxCubes"){
+			System.out.println("Invalid parameter(s)! Usage: -maxCubes <amount>");
+			System.exit(0);
+		}
+		if(args.length==2 && args[0]=="-maxCubes"){
+			try{
+				MAX = Short.parseShort(args[1]);
+			}catch(Exception e){
+				System.out.println("Amount must be a number! Usage: -maxCubes <amount>");
+				System.exit(0);
+			}
+		}
+		
+		kubas = new TKubas[MAX];
+		
 		Scanner input = new Scanner(System.in);
 		
-		TKubas kubas[] = new TKubas[MAX];
-		for(int i = 0; i < MAX ; i++){
+		for(int i = 0; i < kubas.length ; i++){
 			kubas[i] = new TKubas();
 		}
 		
@@ -19,6 +42,9 @@ public class Main {
 		float x,y,z;
 		String name;
 		int chosenOne = 0;
+		
+		//For debugging
+		System.out.println("Cube objects limit was set to: " + MAX);
 		
 		while(!finish){
 			clearConsole();
