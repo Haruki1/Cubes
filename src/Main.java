@@ -10,22 +10,21 @@ public class Main {
 		
 		if(args.length==0){
 			kubas = new TKubas[20];
-		}
-		if(args.length!=0 && args.length!=2){
-			System.out.println("Usage: -maxCubes <amount>");
-			System.exit(0);
-		}
-		if(args.length==2 && args[0]!="-maxCubes"){
-			System.out.println("Invalid parameter(s)! Usage: -maxCubes <amount>");
-			System.exit(0);
-		}
-		if(args.length==2 && args[0]=="-maxCubes"){
-			try{
-				MAX = Short.parseShort(args[1]);
-			}catch(Exception e){
-				System.out.println("Amount must be a number! Usage: -maxCubes <amount>");
+		}else if(args.length==2){
+			if(args[0].equals("-maxCubes")){
+				try{
+					MAX = Short.parseShort(args[1]);
+				}catch(Exception e){
+					System.out.println("Kubu kiekis turi buti integer tipo! Naudojimas: -maxCubes <kiekis>");
+					System.exit(0);
+				}
+			}else{
+				System.out.println("Blogas(-i) parametras(-ai)! Naudojimas: -maxCubes <kiekis>");
 				System.exit(0);
 			}
+		}else{
+			System.out.println("Naudojimas: -maxCubes <kiekis>");
+			System.exit(0);
 		}
 		
 		kubas = new TKubas[MAX];
@@ -41,10 +40,13 @@ public class Main {
 		boolean finish = false;
 		float x,y,z;
 		String name;
-		int chosenOne = 0;
+		int chosenOne[] = new int[MAX];
+		int j = 0; //chosenOne index
 		
 		//For debugging
-		System.out.println("Cube objects limit was set to: " + MAX);
+		System.out.println("Kubo objektu limitas buvo nustatytas i: " + MAX);
+		System.out.println("Kad nustatyti kitoki kubo objektu limita naudokita parametra -maxCubes <kiekis>");
+		System.out.print("Pavyzdziui:   Klases.jar -maxCubes 60\n\n\n");
 		
 		while(!finish){
 			clearConsole();
@@ -81,24 +83,25 @@ public class Main {
 						for(int i = 0; i < TKubas.cubes; i++){
 							System.out.println(i+1 + ". Kubo vardas: " + kubas[i].getName());
 						}
-						System.out.println("Kelinto kubo informacija norite pamatyti: ");
+						System.out.println("Kurio kubo informacija norite pamatyti: ");
 						cubeName = input.nextLine();
 						
 						for(int i = 0; i < TKubas.cubes; i++){
 							if(cubeName==kubas[i].getName()){
-								chosenOne = i;
-								break;
+								chosenOne[j] = i;
+								j++;
 							}
 						}
-						
-						System.out.printf("Kubo pavadinimas: %s\tDydis: %f; %f; %f\t Pav. Plotas: %f\tTuris: %f\n", 
-							kubas[chosenOne].getName(),
-							kubas[chosenOne].getWidth(),
-							kubas[chosenOne].getHeight(),
-							kubas[chosenOne].getDepth(),
-							kubas[chosenOne].cubeSurfacePlot(),
-							kubas[chosenOne].cubeVol()
-						);
+						for(int i = 0; i <= j; i++){
+							System.out.printf("Kubo pavadinimas: %s\tDydis: %f; %f; %f\t Pav. Plotas: %f\tTuris: %f\n", 
+								kubas[chosenOne[i]].getName(),
+								kubas[chosenOne[i]].getWidth(),
+								kubas[chosenOne[i]].getHeight(),
+								kubas[chosenOne[i]].getDepth(),
+								kubas[chosenOne[i]].cubeSurfacePlot(),
+								kubas[chosenOne[i]].cubeVol()
+							);
+						}
 					}
 					break;
 				}
