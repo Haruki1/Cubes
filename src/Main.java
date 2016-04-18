@@ -45,6 +45,7 @@ public class Main {
 		
 		//For debugging
 		System.out.println("Kubo objektu limitas buvo nustatytas i: " + MAX);
+		
 		System.out.println("Kad nustatyti kitoki kubo objektu limita naudokita parametra -maxCubes <kiekis>");
 		System.out.print("Pavyzdziui:   Klases.jar -maxCubes 60\n\n\n");
 		
@@ -84,8 +85,6 @@ public class Main {
 							System.out.println(i+1 + ". Kubo vardas: " + kubas[i].getName());
 						}
 						
-						//For Debugging!!
-						System.out.println(TKubas.cubes);
 						
 						System.out.println("Kurio kubo informacija norite pamatyti: ");
 						cubeName = input.nextLine();
