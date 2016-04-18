@@ -83,16 +83,25 @@ public class Main {
 						for(int i = 0; i < TKubas.cubes; i++){
 							System.out.println(i+1 + ". Kubo vardas: " + kubas[i].getName());
 						}
+						
+						//For Debugging!!
+						System.out.println(TKubas.cubes);
+						
 						System.out.println("Kurio kubo informacija norite pamatyti: ");
 						cubeName = input.nextLine();
+						input.nextLine();
 						
 						for(int i = 0; i < TKubas.cubes; i++){
-							if(cubeName==kubas[i].getName()){
+							if(cubeName.equals(kubas[i].getName())){
 								chosenOne[j] = i;
 								j++;
 							}
 						}
-						for(int i = 0; i <= j; i++){
+						if(j==0){
+							System.out.println("Ivedete neegzistuojanti kubo varda!");
+							break;
+						}
+						for(int i = 0; i < j; i++){
 							System.out.printf("Kubo pavadinimas: %s\tDydis: %f; %f; %f\t Pav. Plotas: %f\tTuris: %f\n", 
 								kubas[chosenOne[i]].getName(),
 								kubas[chosenOne[i]].getWidth(),
@@ -102,6 +111,7 @@ public class Main {
 								kubas[chosenOne[i]].cubeVol()
 							);
 						}
+						j = 0;
 					}
 					break;
 				}
