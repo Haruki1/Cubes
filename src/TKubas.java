@@ -4,7 +4,7 @@ public class TKubas {
 	private float x,y,z;
 	public static short cubes = 0;
 	
-	void createCube(String name, float x, float y, float z){
+	TKubas(String name, float x, float y, float z){
 		
 		this.name = name;
 		this.x = x;
@@ -30,6 +30,12 @@ public class TKubas {
 		
 		return x * y * z;
 		
+	}
+	
+	void cubeInfo(){
+		System.out.printf("Kubo pavadinimas: %s    Dydis: %f; %f; %f    Pav. Plotas: %f    Turis: %f\n", 
+				name, x, y, z, cubeSurfacePlot(), cubeVol()
+			);
 	}
 	
 	float cubeSurfacePlot(){

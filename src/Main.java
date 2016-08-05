@@ -1,59 +1,35 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
 	
-	
 	public static void main(String[] args){
 		
-		TKubas kubas[] = null;
-		short MAX = 20;
-		
-		if(args.length==0){
-			kubas = new TKubas[20];
-		}else if(args.length==2){
-			if(args[0].equals("-maxCubes")){
-				try{
-					MAX = Short.parseShort(args[1]);
-				}catch(Exception e){
-					System.out.println("Kubu kiekis turi buti integer tipo! Naudojimas: -maxCubes <kiekis>");
-					System.exit(0);
-				}
-			}else{
-				System.out.println("Blogas(-i) parametras(-ai)! Naudojimas: -maxCubes <kiekis>");
-				System.exit(0);
-			}
-		}else{
-			System.out.println("Naudojimas: -maxCubes <kiekis>");
-			System.exit(0);
-		}
-		
-		kubas = new TKubas[MAX];
-		
+		//TKubas kubas[] = null;
+		List<TKubas> kubas = new ArrayList<TKubas>();
+
 		Scanner input = new Scanner(System.in);
-		
-		for(int i = 0; i < kubas.length ; i++){
-			kubas[i] = new TKubas();
-		}
 		
 		String choice = null;
 		String cubeName;
 		boolean finish = false;
 		float x,y,z;
 		String name;
-		int chosenOne[] = new int[MAX];
+		List<Integer> chosenOne = new ArrayList<Integer>();
 		int j = 0; //chosenOne index
-		
-		//For debugging
-		System.out.println("Kubo objektu limitas buvo nustatytas i: " + MAX);
-		
-		System.out.println("Kad nustatyti kitoki kubo objektu limita naudokita parametra -maxCubes <kiekis>");
-		System.out.print("Pavyzdziui:   Klases.jar -maxCubes 60\n\n\n");
-		
+		boolean existingCube;
+
 		while(!finish){
-			clearConsole();
-			System.out.println("Ka darysite?\n\tkurti nauja kuba-kurti;\n\tkubu sarasas-sarasas;\n\tkubo info-info;\n\tbaigti programa-baigti");
+			System.out.println("Ka darysite?\n\tkurti nauja kuba-kurti;\n\tkubu sarasas-sarasas;\n\tkubo info-info;\n\tpamatyti salyga-salyga\n\tbaigti programa-baigti");
 			choice = input.nextLine();
 			switch(choice){
+			case "salyga":{
+				
+				System.out.println("8. Sukurkite klasæ TKubas.\nGalimi laukai: ilgis, plotis, aukðtis, tûris, plotas.\nGalimi " +
+                                   "metodai:\nkubo sukûrimas, paraðymas, tûrio ir pavirðiaus ploto apskaièiavimas, palyginimas.\n\nDarba atliko: Laurynas Narbutas IN14\n");
+				break;				
+			}
 				case "kurti":{
 					System.out.println("Parasykite kuriamo kubo varda: ");
 					name = input.nextLine();
@@ -63,7 +39,8 @@ public class Main {
 					x = input.nextFloat();
 					System.out.println("Parasykite kuriamo kubo gyli: ");
 					z = input.nextFloat();
-					kubas[TKubas.cubes].createCube(name, x, y, z);
+					kubas.add(new TKubas(name, x, y, z));
+					//kubas[TKubas.cubes].createCube(name, x, y, z);
 					input.nextLine();
 					break;
 				}
@@ -72,45 +49,45 @@ public class Main {
 						System.out.println("Nera sukurtu kubu!");
 					}else{
 						for(int i = 0; i < TKubas.cubes; i++){
-							System.out.println(i+1 + ". Kubo vardas: " + kubas[i].getName());
+							System.out.println(i+1 + ". Kubo vardas: " + kubas.get(i).getName());
 						}
 					}
 					break;
 				}
 				case "info":{
+					existingCube = false;
 					if(TKubas.cubes==0){
 						System.out.println("Nera sukurtu kubu!");
 					}else{
-						for(int i = 0; i < TKubas.cubes; i++){
-							System.out.println(i+1 + ". Kubo vardas: " + kubas[i].getName());
-						}
-						
-						
-						System.out.println("Kurio kubo informacija norite pamatyti: ");
-						cubeName = input.nextLine();
-						input.nextLine();
-						
-						for(int i = 0; i < TKubas.cubes; i++){
-							if(cubeName.equals(kubas[i].getName())){
-								chosenOne[j] = i;
-								j++;
+						while(!existingCube){
+							for(int i = 0; i < TKubas.cubes; i++){
+								System.out.println(i+1 + ". Kubo vardas: " + kubas.get(i).getName());
 							}
+							System.out.print("\n\n");
+						    System.out.println("DEMESIO: Programoje yra maza beda,\ntodel cia ivedus ieskomo kubo varda\nreiks du kartus paspaust Enter klavisa!");
+							System.out.println("Kurio kubo informacija norite pamatyti(veskite ne indexa o varda): ");
+							cubeName = input.nextLine();
+							//input.nextLine();
+							/*Nezinau kolkas kaip sutvarkyti. Be sito programoje atsiranda beda bet idejus sia eilute ziurint kubo info
+							ivedus varda reikia du kartus spausti Enter klavisa.
+							*/
+							for(int i = 0; i < TKubas.cubes; i++){
+								if(cubeName.equals(kubas.get(i).getName())){
+									chosenOne.add(i);
+									j++;
+								}
+							}
+							if(j==0){
+								System.out.println("Ivedete neegzistuojanti kubo varda!");
+							}else{
+								existingCube = true;
+							}
+							for(int i = 0; i < j; i++){
+								System.out.print((chosenOne.get(i)+1) + ". ");
+								kubas.get(chosenOne.get(i)).cubeInfo();
+							}
+							j = 0;
 						}
-						if(j==0){
-							System.out.println("Ivedete neegzistuojanti kubo varda!");
-							break;
-						}
-						for(int i = 0; i < j; i++){
-							System.out.printf("Kubo pavadinimas: %s\tDydis: %f; %f; %f\t Pav. Plotas: %f\tTuris: %f\n", 
-								kubas[chosenOne[i]].getName(),
-								kubas[chosenOne[i]].getWidth(),
-								kubas[chosenOne[i]].getHeight(),
-								kubas[chosenOne[i]].getDepth(),
-								kubas[chosenOne[i]].cubeSurfacePlot(),
-								kubas[chosenOne[i]].cubeVol()
-							);
-						}
-						j = 0;
 					}
 					break;
 				}
@@ -125,27 +102,6 @@ public class Main {
 		}
 		
 		input.close();
-	}
-	
-	public final static void clearConsole()
-	{
-	    try
-	    {
-	        final String os = System.getProperty("os.name");
-
-	        if (os.contains("Windows"))
-	        {
-	            Runtime.getRuntime().exec("cls");
-	        }
-	        else
-	        {
-	            Runtime.getRuntime().exec("clear");
-	        }
-	    }
-	    catch (final Exception e)
-	    {
-	        //  Handle any exceptions.
-	    }
 	}
 	
 }
