@@ -6,7 +6,6 @@ public class Main {
 	
 	public static void main(String[] args){
 		
-		//TKubas kubas[] = null;
 		List<TKubas> kubas = new ArrayList<TKubas>();
 
 		Scanner input = new Scanner(System.in);
@@ -67,10 +66,6 @@ public class Main {
 						    System.out.println("DEMESIO: Programoje yra maza beda,\ntodel cia ivedus ieskomo kubo varda\nreiks du kartus paspaust Enter klavisa!");
 							System.out.println("Kurio kubo informacija norite pamatyti(veskite ne indexa o varda): ");
 							cubeName = input.nextLine();
-							//input.nextLine();
-							/*Nezinau kolkas kaip sutvarkyti. Be sito programoje atsiranda beda bet idejus sia eilute ziurint kubo info
-							ivedus varda reikia du kartus spausti Enter klavisa.
-							*/
 							for(int i = 0; i < TKubas.cubes; i++){
 								if(cubeName.equals(kubas.get(i).getName())){
 									chosenOne.add(i);
