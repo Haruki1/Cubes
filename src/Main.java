@@ -20,15 +20,17 @@ public class Main {
 		boolean existingCube;
 
 		while(!finish){
-			System.out.println("Ka darysite?\n\tkurti nauja kuba-kurti;\n\tkubu sarasas-sarasas;\n\tkubo info-info;\n\tpamatyti salyga-salyga\n\tbaigti programa-baigti");
+			System.out.println("Ka darysite?\n\tkurti nauja kuba-kurti;\n\ttrinti kuba-trinti;\n\tkubu sarasas-sarasas;\n\tkubo info-info;\n\tpamatyti salyga-salyga\n\tbaigti programa-baigti");
 			choice = input.nextLine();
 			switch(choice){
-			case "salyga":{
-				
-				System.out.println("8. Sukurkite klasæ TKubas.\nGalimi laukai: ilgis, plotis, aukðtis, tûris, plotas.\nGalimi " +
-                                   "metodai:\nkubo sukûrimas, paraðymas, tûrio ir pavirðiaus ploto apskaièiavimas, palyginimas.\n\nDarba atliko: Laurynas Narbutas IN14\n");
-				break;				
-			}
+			
+				case "salyga":{
+					
+					System.out.println("8. Sukurkite klasæ TKubas.\nGalimi laukai: ilgis, plotis, aukðtis, tûris, plotas.\nGalimi " +
+	                                   "metodai:\nkubo sukûrimas, paraðymas, tûrio ir pavirðiaus ploto apskaièiavimas, palyginimas.\n\nDarba atliko: Laurynas Narbutas IN14\n");
+					break;				
+				}
+			
 				case "kurti":{
 					System.out.println("Parasykite kuriamo kubo varda: ");
 					name = input.nextLine();
@@ -39,13 +41,48 @@ public class Main {
 					System.out.println("Parasykite kuriamo kubo gyli: ");
 					z = input.nextFloat();
 					kubas.add(new TKubas(name, x, y, z));
-					//kubas[TKubas.cubes].createCube(name, x, y, z);
 					input.nextLine();
 					break;
 				}
+				
+				case "trinti":{
+					existingCube = false;
+					if(TKubas.cubes==0){
+						System.out.println("Nera sukurtu kubu!");
+						System.out.print("\n\n");
+					}else{
+						while(!existingCube){
+							for(int i = 0; i < TKubas.cubes; i++){
+								System.out.println(i+1 + ". Kubo vardas: " + kubas.get(i).getName());
+							}
+							System.out.print("\n\n");
+							System.out.println("Kuri kuba norite istrinti(veskite ne indexa o varda): ");
+							cubeName = input.nextLine();
+							for(int i = 0; i < TKubas.cubes; i++){
+								if(cubeName.equals(kubas.get(i).getName())){
+									chosenOne.add(i);
+									j++;
+								}
+							}
+							if(j==0){
+								System.out.println("Ivedete neegzistuojanti kubo varda!");
+							}else{
+								existingCube = true;
+							}
+							for(int i = 0; i < j; i++){
+								kubas.remove(chosenOne.get(i));
+							}
+							j = 0;
+						}
+					}
+					chosenOne.clear();
+					break;
+				}
+				
 				case "sarasas":{
 					if(TKubas.cubes==0){
 						System.out.println("Nera sukurtu kubu!");
+						System.out.print("\n\n");
 					}else{
 						for(int i = 0; i < TKubas.cubes; i++){
 							System.out.println(i+1 + ". Kubo vardas: " + kubas.get(i).getName());
@@ -53,10 +90,12 @@ public class Main {
 					}
 					break;
 				}
+				
 				case "info":{
 					existingCube = false;
 					if(TKubas.cubes==0){
 						System.out.println("Nera sukurtu kubu!");
+						System.out.print("\n\n");
 					}else{
 						while(!existingCube){
 							for(int i = 0; i < TKubas.cubes; i++){
@@ -84,12 +123,15 @@ public class Main {
 							j = 0;
 						}
 					}
+					chosenOne.clear();
 					break;
 				}
+				
 				case "baigti":{
 					finish = true;
 					break;
 				}
+				
 				default:{
 					System.out.println("Ivedete bloga pasirinkima!");
 				}
